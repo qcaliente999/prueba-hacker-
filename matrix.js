@@ -1,28 +1,36 @@
 const canvas = document.createElement("canvas");
 const ctx = canvas.getContext("2d");
 
+canvas.id = "matrixCanvas";
 canvas.style.position = "fixed";
 canvas.style.top = "0";
 canvas.style.left = "0";
-canvas.style.zIndex = "-1"; // Fondo
-canvas.style.width = "100vw";
-canvas.style.height = "100vh";
-canvas.style.pointerEvents = "none"; // Que no interfiera
+canvas.style.zIndex = "0"; // IMPORTANTE: zIndex muy bajo
+canvas.style.pointerEvents = "none"; // Para no bloquear clics
+document.body.prepend(canvas); // Usamos prepend para que quede detrás
 
-document.body.appendChild(canvas);
-
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
 
 const letters = "01ABCDEFGHIJKLMNOPQRSTUVWXYZ$#%&@".split("");
 const fontSize = 14;
-const columns = canvas.width / fontSize;
-const drops = Array.from({ length: columns }).fill(1);
+let columns;
+let drops;
+
+function initializeDrops() {
+  columns = canvas.width / fontSize;
+  drops = Array.from({ length: columns }).fill(1);
+}
+initializeDrops();
 
 function draw() {
   ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = "#0f0"; // color verde Matrix
+  ctx.fillStyle = "#0f0";
   ctx.font = `${fontSize}px monospace`;
 
   for (let i = 0; i < drops.length; i++) {
