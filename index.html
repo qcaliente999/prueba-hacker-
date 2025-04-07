@@ -1,138 +1,77 @@
 <!DOCTYPE html>
-
-<style>
-  body {
-    position: relative;
-    z-index: 1;
-  }
-</style>
-
-
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EnriqueCoin - Dominio Cripto Global</title>
-  <link rel="stylesheet" href="style.css" />
-  <script src="matrix.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Matrix Animation</title>
   <style>
     body {
-      font-family: 'Courier New', Courier, monospace;
-      background-color: black;
-      color: #00ff00;
       margin: 0;
-      padding: 2rem;
+      padding: 0;
+      overflow: hidden;
+      position: relative;
+      z-index: 1; /* Asegura que el contenido principal esté por encima del canvas */
     }
 
-    .container {
-      max-width: 900px;
-      margin: auto;
-      background-color: rgba(0, 0, 0, 0.7);
-      padding: 2rem;
-      border: 1px solid #00ff00;
-      border-radius: 10px;
-      box-shadow: 0 0 20px #00ff00;
-    }
-
-    h1, h2 {
-      color: #00ffcc;
-      text-shadow: 0 0 5px #00ffcc;
-    }
-
-    button {
-      background-color: #000;
-      border: 1px solid #00ff00;
-      color: #00ff00;
-      padding: 10px 20px;
-      margin: 10px 5px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #003300;
-    }
-
-    .info-box {
-      background-color: rgba(0, 255, 0, 0.1);
-      border: 1px solid #00ff00;
-      padding: 1rem;
-      margin: 1rem 0;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 1rem;
-    }
-
-    table, th, td {
-      border: 1px solid #00ff00;
-    }
-
-    th, td {
-      padding: 0.5rem;
-      text-align: center;
-    }
-
-    th {
-      background-color: rgba(0, 255, 0, 0.2);
+    #matrixCanvas {
+      z-index: -1; /* Asegura que el canvas de Matrix esté detrás de todo */
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none; /* Para que no interfiera con clics */
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>🌐 Bienvenido a EnriqueCoin</h1>
-    <p>El último refugio financiero. En medio del caos económico, solo una moneda puede salvarnos: EnriqueCoin.</p>
+  <script>
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
 
-    <div class="info-box">
-      <h2>¿Por qué EnriqueCoin?</h2>
-      <ul>
-        <li>✅ Inmune a la inflación</li>
-        <li>✅ Respaldada por sabiduría ancestral</li>
-        <li>✅ Programada para resistir el colapso del sistema</li>
-      </ul>
-    </div>
+    canvas.id = "matrixCanvas";
+    canvas.style.position = "fixed";
+    canvas.style.top = "0";
+    canvas.style.left = "0";
+    canvas.style.zIndex = "-1"; // ZIndex bajo para que quede detrás de todo
+    canvas.style.pointerEvents = "none"; // Para que no bloquee clics
+    document.body.prepend(canvas); // Usamos prepend para que quede detrás de otros elementos
 
-    <button onclick="location.href='subpagina1.html'">🚀 Aprende más sobre EnriqueCoin</button>
-    <button onclick="alert('¡Solo los elegidos pueden acceder aún!')">🔒 Acceso VIP</button>
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
 
-    <h2>📊 Proyecciones de Dominio Mundial</h2>
-    <table>
-      <tr>
-        <th>Año</th>
-        <th>Capitalización</th>
-        <th>Países Adoptantes</th>
-        <th>Índice de Poder</th>
-      </tr>
-      <tr>
-        <td>2025</td>
-        <td>$4.2B</td>
-        <td>12</td>
-        <td>★★★★☆</td>
-      </tr>
-      <tr>
-        <td>2027</td>
-        <td>$89B</td>
-        <td>42</td>
-        <td>★★★★★</td>
-      </tr>
-      <tr>
-        <td>2030</td>
-        <td>$2.3T</td>
-        <td>ONU</td>
-        <td>☠️ OVERPOWERED ☠️</td>
-      </tr>
-    </table>
+    const letters = "01ABCDEFGHIJKLMNOPQRSTUVWXYZ$#%&@".split("");
+    const fontSize = 14;
+    let columns;
+    let drops;
 
-    <div class="info-box">
-      <h2>🎯 Misión de EnriqueCoin</h2>
-      <p>Reemplazar el dólar, acabar con la deuda mundial y establecer una nueva era basada en memes, código y café solo.</p>
-    </div>
+    function initializeDrops() {
+      columns = canvas.width / fontSize;
+      drops = Array.from({ length: columns }).fill(1);
+    }
+    initializeDrops();
 
-    <footer style="text-align: center; margin-top: 2rem;">
-      <p style="font-size: 0.8rem;">Powered by el mismísimo Enrique™. Todos los derechos salvados.</p>
-    </footer>
-  </div>
+    function draw() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#0f0";
+      ctx.font = `${fontSize}px monospace`;
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = letters[Math.floor(Math.random() * letters.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height || Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+
+        drops[i]++;
+      }
+    }
+
+    setInterval(draw, 33);
+  </script>
 </body>
 </html>
