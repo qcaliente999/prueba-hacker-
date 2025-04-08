@@ -1,33 +1,33 @@
 <!DOCTYPE html>
-<style>
-  body {
-    position: relative;
-    z-index: 1;
-  }
-</style>
-
-
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>EnriqueCoin - Dominio Cripto Global</title>
   <link rel="stylesheet" href="style.css" />
-  <script src="matrix.js" defer></script>
   <style>
     body {
-      font-family: 'Courier New', Courier, monospace;
-      background-color: black;
-      color: #00ff00;
       margin: 0;
-      padding: 2rem;
+      font-family: 'Courier New', monospace;
+      background: black;
+      color: #00ff00;
+      position: relative;
+      z-index: 1;
+    }
+
+    #matrixCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      pointer-events: none;
     }
 
     .container {
       max-width: 900px;
-      margin: auto;
-      background-color: rgba(0, 0, 0, 0.7);
+      margin: 0 auto;
       padding: 2rem;
+      background-color: rgba(0, 0, 0, 0.7);
       border: 1px solid #00ff00;
       border-radius: 10px;
       box-shadow: 0 0 20px #00ff00;
@@ -80,6 +80,8 @@
   </style>
 </head>
 <body>
+  <canvas id="matrixCanvas"></canvas>
+
   <div class="container">
     <h1>🌐 Bienvenido a EnriqueCoin</h1>
     <p>El último refugio financiero. En medio del caos económico, solo una moneda puede salvarnos: EnriqueCoin.</p>
@@ -133,5 +135,7 @@
       <p style="font-size: 0.8rem;">Powered by el mismísimo Enrique™. Todos los derechos salvados.</p>
     </footer>
   </div>
+
+  <script src="matrix.js"></script>
 </body>
 </html>
