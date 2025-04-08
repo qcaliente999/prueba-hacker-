@@ -1,13 +1,5 @@
-const canvas = document.createElement("canvas");
+const canvas = document.getElementById("matrixCanvas");
 const ctx = canvas.getContext("2d");
-
-canvas.id = "matrixCanvas";
-canvas.style.position = "fixed";
-canvas.style.top = "0";
-canvas.style.left = "0";
-canvas.style.zIndex = "0"; // IMPORTANTE: zIndex muy bajo
-canvas.style.pointerEvents = "none"; // Para no bloquear clics
-document.body.prepend(canvas); // Usamos prepend para que quede detrás
 
 function resizeCanvas() {
   canvas.width = window.innerWidth;
@@ -22,8 +14,8 @@ let columns;
 let drops;
 
 function initializeDrops() {
-  columns = canvas.width / fontSize;
-  drops = Array.from({ length: columns }).fill(1);
+  columns = Math.floor(canvas.width / fontSize);
+  drops = Array(columns).fill(1);
 }
 initializeDrops();
 
